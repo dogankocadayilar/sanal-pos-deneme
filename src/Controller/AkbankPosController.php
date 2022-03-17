@@ -34,7 +34,7 @@ class AkbankPosController extends AbstractController
 
         $this->request = Request::createFromGlobals();
         $this->ip = $this->request->getClientIp();
-        $account = AccountFactory::createEstPosAccount('finansbank', '100200000', 'AKBANK', 'AKBANK01', '3d_pay', '123456');
+        $account = AccountFactory::createEstPosAccount('akbank', '100200000', 'AKBANK', 'AKBANK01', '3d_pay', '123456');
 
         try {
             $this->pos = PosFactory::createPosGateway($account);

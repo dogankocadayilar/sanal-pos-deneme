@@ -33,7 +33,7 @@ class FinansbankPosController extends AbstractController
 
         $this->request = Request::createFromGlobals();
         $this->ip = $this->request->getClientIp();
-        $account = AccountFactory::createPayForAccount('qnbfinansbank-payfor', '085300000009704', 'QNB_API_KULLANICI_3DPAY', 'UcBN0', '3d_host', '12345678');
+        $account = AccountFactory::createPayForAccount('qnbfinansbank-payfor', '085300000009704', 'QNB_API_KULLANICI_3DPAY', 'UcBN0', '3d_pay', '12345678');
 
         try {
             $this->pos = PosFactory::createPosGateway($account);
@@ -46,7 +46,7 @@ class FinansbankPosController extends AbstractController
 
     }
 
-    #[Route('/finansbank', name: 'app_finansbank_pos')]
+    #[Route('/finansbank/index', name: 'app_finansbank_pos')]
     public function form(): Response
     {
 
@@ -100,7 +100,7 @@ class FinansbankPosController extends AbstractController
         ]);
     }
 
-    #[Route('/finansbank/index', name: 'app_finansbank_index')]
+    #[Route('/finansbank', name: 'app_finansbank_index')]
     public function index() :Response
     {
         return $this->render('finansbank_pos/index.html.twig');
@@ -114,7 +114,33 @@ class FinansbankPosController extends AbstractController
             echo new RedirectResponse($this->baseUrl);
             exit();
         }
+        $orderId = date('Ymd').strtoupper(substr(uniqid(sha1(time())), 0, 4));
 
+        $amount = (float) 10.55;
+        $installment = '0';
+
+        $successUrl = $this->baseUrl.'/response';
+        $failUrl = $this->baseUrl.'/response';
+
+        $rand = microtime();
+
+        $order = [
+            'id'          => $orderId,
+            'email'       => 'mail@customer.com', // optional
+            'name'        => 'John Doe', // optional
+            'amount'      => $amount,
+            'installment' => $installment,
+            'currency'    => 'TRY',
+            'ip'          => $this->ip,
+            'success_url' => $successUrl,
+            'fail_url'    => $failUrl,
+            'lang'        => PayForPos::LANG_TR,
+            'rand'        => $rand,
+        ];
+
+
+        $this->pos->prepare($order, AbstractGateway::TX_PAY);
+        $this->pos->payment();
 
         $response = $this->pos->getResponse();
 
