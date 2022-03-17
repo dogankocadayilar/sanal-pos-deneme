@@ -1,1 +1,0 @@
-{"id":"202203178F67","email":"mail@customer.com","name":"John Doe","amount":1,"installment":"0","currency":"TRY","ip":"::1","success_url":"http:\/\/localhost:8000\/akbank\/response","fail_url":"http:\/\/localhost:8000\/akbank\/response","lang":"tr","rand":"0.68275400 1647516534"}

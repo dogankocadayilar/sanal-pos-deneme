@@ -81,9 +81,9 @@ class AkbankPosController extends AbstractController
         ];
 
 
-        $file = fopen('C:\xampp\htdocs\Symfony-Projects\sanal-pos-garanti\\n'.$order["id"], "a+");
-        fwrite($file, json_encode($order, JSON_UNESCAPED_UNICODE), strlen(json_encode($order, JSON_UNESCAPED_UNICODE)));
-        fclose($file);
+        // $file = fopen('C:\xampp\htdocs\Symfony-Projects\sanal-pos-garanti\\n'.$order["id"], "a+");
+        // fwrite($file, json_encode($order, JSON_UNESCAPED_UNICODE), strlen(json_encode($order, JSON_UNESCAPED_UNICODE)));
+        // fclose($file);
 
 
 
