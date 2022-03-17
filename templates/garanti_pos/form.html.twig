@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GarantiPosController!{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+       
+{% endblock %}
+
+{% block body %}
+<div class="continer">
+    <form method="post" action="{{formdata.gateway}}" class="redirect-form" role="form">
+        {% for key, value in formdata.inputs %}
+            <input type="hidden" name="{{key}}" value="{{value}}">     
+        {% endfor %}
+        <div class="text-center">Redirecting...</div>
+        <hr>
+        <pre>
+            {{ dump(formdata) }}
+        </pre>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-lg btn-block btn-success">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
